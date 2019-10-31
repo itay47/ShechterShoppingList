@@ -11,9 +11,17 @@ namespace ShechterShoppingList.Models
     {
         [DynamoDBHashKey]
         public Guid Id { get; set; }
+
+        [DynamoDBProperty]
         public string GroceyName { get; set; }
+
+        [DynamoDBProperty]
         public int Ammount { get; set; }
+
+        [DynamoDBProperty]
         public string Measure { get; set; }
+
+        [DynamoDBProperty]
         public DateTime DateModified { get; set; }
 
         public enum UnitOfMeasure
