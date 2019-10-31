@@ -14,6 +14,7 @@ namespace ShechterShoppingList.Models
         public string GroceyName { get; set; }
         public int Ammount { get; set; }
         public string Measure { get; set; }
+        public DateTime DateModified { get; set; }
 
         public enum UnitOfMeasure
         {
