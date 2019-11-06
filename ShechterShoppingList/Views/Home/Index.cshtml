@@ -1,10 +1,88 @@
-﻿@{
+﻿@model ShechterShoppingList.ViewModels.GroceryViewModel
+@{
     ViewData["Title"] = "Home Page";
+    var mdl = Model;
 }
 
 <div class="media">
     <img class="mr-3" src="~/pic/Groceries.jpg" width="100">
     <div class="media-body">
-        <h1 class="align-items-stretch" style="align-content:center">Shopping List</h1>
+        <h1 class="align-items-center" style="align-content:center">Shopping List</h1>
     </div>
 </div>
+
+<br />
+
+<div>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(m => m._Grocery.Id)*@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m._Grocery.GroceyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m._Grocery.Ammount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m._Grocery.Measure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m._Grocery.DateModified)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Groceries)
+            {
+            <tr>
+                
+                <td>
+                    @*@Html.DisplayFor(m => item.Id)*@
+                    <div style="text-align:center">
+                        <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
+                            <button class="btn btn-primary" id="@item.Id">Edit</button>
+                            @Html.HiddenFor(h => item.Id)
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align:center">
+                        @Html.DisplayFor(m => item.GroceyName)
+                     </div>
+                </td>
+                <td>
+                    <div style="text-align:center">
+                        @Html.DisplayFor(m => item.Ammount)
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align:center">
+                        @Html.DisplayFor(m => item.Measure)
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align:center">
+                        @Html.DisplayFor(m => item.DateModified)
+                    </div>
+                </td>
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@foreach (var item in Model.Groceries)
+{
+    Html.HiddenFor(h => item.Id);
+    Html.HiddenFor(h => item.DateModified);
+
+
+}
+
+@Html.HiddenFor(h => Model._Grocery.Id)
+@Html.HiddenFor(h => Model._Grocery.DateModified)

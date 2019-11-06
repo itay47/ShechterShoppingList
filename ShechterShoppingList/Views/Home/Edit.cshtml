@@ -1,0 +1,60 @@
+﻿@using ShechterShoppingList.Models
+@model Grocery
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit - Grocery: @Model.GroceyName</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateDataAsync" asp-controller="Home">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" name="gId" id="gId" class="form-control" readonly />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label id="GroceyName" class="control-label">Grocey Name</label>
+                <input asp-for="GroceyName" id="gName" name="gName" class="form-control" style="text-align:center" />
+                <span asp-validation-for="GroceyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ammount" class="control-label"></label>
+                <input asp-for="Ammount" id="gAmmount" name="gAmmount" class="form-control" style="text-align:center" />
+                <span asp-validation-for="Ammount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Measure" class="control-label"></label>
+                @*<input asp-for="Measure" class="form-control" />*@
+                @Html.DropDownListFor(
+                    m => m.Measure, // <-- the var for containing the selected item
+                    new SelectList(Enum.GetValues(typeof(Grocery.UnitOfMeasure))), // <-- the enum list
+                    null, // <-- default text
+                    new { @id = "gMeasure", @name = "gMeasure" }
+                  )
+                @*@Html.ValidationMessageFor(m => m.Measure, "Please select", new { @class = "text-danger" })*@
+                <span asp-validation-for="Measure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label id="DateModified" class="control-label">Date Modified</label>
+                <input asp-for="DateModified" class="form-control" readonly />
+                <span asp-validation-for="DateModified" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
