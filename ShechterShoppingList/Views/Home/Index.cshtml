@@ -13,6 +13,38 @@
 
 <br />
 
+<div class="container-fluid">
+    <form asp-action="Add" asp-controller="Home" method="post">
+        <div class="form-group">
+            <div class="d-inline-flex">
+                <div style="margin-left:4px">@Html.DisplayNameFor(m => m._Grocery.GroceyName)</div>
+                <input asp-for="_Grocery.GroceyName" id="gName" name="gName" class="form-control" style="text-align:center;margin-left:12px" />
+                <span asp-validation-for="_Grocery.GroceyName" class="text-danger"></span>
+
+                <div style="margin-left:12px">@Html.DisplayNameFor(m => m._Grocery.Ammount)</div>
+                <input asp-for="_Grocery.Ammount" id="gAmmount" name="gAmmount" class="form-control" style="text-align:center; margin-left:12px" />
+                <span asp-validation-for="_Grocery.Ammount" class="text-danger"></span>
+
+                <div style="margin-left:12px">@Html.DisplayNameFor(m => m._Grocery.Measure)</div>
+                @Html.DropDownListFor(
+                    m => m._Grocery.Measure, // <-- the var for containing the selected item
+                    new SelectList(Enum.GetValues(typeof(Grocery.UnitOfMeasure))), // <-- the enum list
+                    null, // <-- default text
+                    new { @id = "gMeasure", @name = "gMeasure", @class = "form-control", @style = "margin-left:4px" }
+                  )
+                <span asp-validation-for="_Grocery.Measure" class="text-danger"></span>
+                
+                <button class="btn btn-success" formmethod="post" style="margin-left:10px">
+                    <i class="fas fa-plus"></i>
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br />
+
 <div>
     <table class="table table-bordered table-sm">
         <thead>
@@ -38,12 +70,11 @@
             @foreach (var item in Model.Groceries)
             {
             <tr>
-                
                 <td>
                     @*@Html.DisplayFor(m => item.Id)*@
                     <div style="text-align:center">
                         <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
-                            <button class="btn btn-primary" id="@item.Id">Edit</button>
+                            <button class="btn btn-primary" id="@item.Id"><i class="far fa-edit"></i> Edit</button>
                             @Html.HiddenFor(h => item.Id)
                         </form>
                     </div>

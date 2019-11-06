@@ -13,7 +13,7 @@ namespace ShechterShoppingList.Models
         [DynamoDBHashKey]
         public Guid Id { get; set; }
 
-        [Display(Name = "Grocery Name")]
+        [Display(Name = "Grocery")]
         [DynamoDBProperty]
         public string GroceyName { get; set; }
 
