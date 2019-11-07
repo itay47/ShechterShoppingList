@@ -1,8 +1,189 @@
-﻿@{
+﻿@model ShechterShoppingList.ViewModels.GroceryViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="media">
+    <img class="mr-3" src="~/pic/Groceries.jpg" width="100">
+    <div class="media-body">
+        <h1 class="align-items-center" style="align-content:center">Shopping List</h1>
+    </div>
 </div>
+
+<br />
+
+<div class="container-fluid">
+    <form asp-action="AddNewGroceryAsync" asp-controller="Home" method="post">
+        <div class="form-group">
+            <div class="d-inline-flex">
+                <div style="margin-left:4px">@Html.DisplayNameFor(m => m.NewGrocery.GroceyName)</div>
+                <input asp-for="NewGrocery.GroceyName" id="gName" name="gName" class="form-control" style="text-align:center;margin-left:12px" />
+                <span asp-validation-for="NewGrocery.GroceyName" class="text-danger"></span>
+
+                <div style="margin-left:12px">@Html.DisplayNameFor(m => m.NewGrocery.Ammount)</div>
+                <input asp-for="NewGrocery.Ammount" id="gAmmount" name="gAmmount" class="form-control" style="text-align:center; margin-left:12px" />
+                <span asp-validation-for="NewGrocery.Ammount" class="text-danger"></span>
+
+                <div style="margin-left:12px">@Html.DisplayNameFor(m => m.NewGrocery.Measure)</div>
+                @Html.DropDownListFor(
+                    m => m.NewGrocery.Measure, // <-- the var for containing the selected item
+                    new SelectList(Enum.GetValues(typeof(Grocery.UnitOfMeasure))), // <-- the enum list
+                    null, // <-- default text
+                    new { @id = "gMeasure", @name = "gMeasure", @class = "form-control", @style = "margin-left:4px" }
+                  )
+                <span asp-validation-for="NewGrocery.Measure" class="text-danger"></span>
+
+                <button class="btn btn-success" formmethod="post" style="margin-left:10px">
+                    <i class="fas fa-plus"></i>
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br />
+
+<div>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(m => m._Grocery.Id)*@
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(m => m.NewGrocery.GroceyName)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(m => m.NewGrocery.Ammount)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(m => m.NewGrocery.Measure)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(m => m.NewGrocery.DateModified)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Groceries)
+            {
+                if (item.Done)
+                {
+                    @*<tr class="strikeout">*@
+                    <tr>
+                        <td>
+                            @*@Html.DisplayFor(m => item.Id)*@
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
+                                    <button class="btn btn-primary" id="Edit @item.Id" disabled><i class="far fa-edit"></i> Edit</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                        <td class="crossed">
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.GroceyName)
+                            </div>
+                        </td>
+                        <td class="crossed">
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.Ammount)
+                            </div>
+                        </td>
+                        <td class="crossed">
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.Measure)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.DateModified)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDoneAsync">
+                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i> Done</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItemAsync">
+                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i> Delete</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                    <tr>
+
+                        <td>
+                            @*@Html.DisplayFor(m => item.Id)*@
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
+                                    <button class="btn btn-primary" id="Edit @item.Id"><i class="far fa-edit"></i> Edit</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.GroceyName)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.Ammount)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.Measure)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                @Html.DisplayFor(m => item.DateModified)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDoneAsync">
+                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i> Done</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItemAsync">
+                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i> Delete</button>
+                                    @Html.HiddenFor(h => item.Id)
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+    </table>
+</div>
+
+@foreach (var item in Model.Groceries)
+{
+    Html.HiddenFor(h => item.Id);
+    Html.HiddenFor(h => item.DateModified);
+
+
+}
+
+@Html.HiddenFor(h => Model.NewGrocery.Id)
+@Html.HiddenFor(h => Model.NewGrocery.DateModified)
