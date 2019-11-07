@@ -30,6 +30,10 @@ namespace ShechterShoppingList.Models
         [DynamoDBProperty]
         public DateTime DateModified { get; set; }
 
+        [Display(Name = "Done")]
+        [DynamoDBProperty]
+        public bool Done { get; set; } = false;
+
         public enum UnitOfMeasure
         {
             Gr,

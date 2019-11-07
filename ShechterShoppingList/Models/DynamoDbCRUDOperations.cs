@@ -33,6 +33,7 @@ namespace ShechterShoppingList.Models
                 Ammount = Ammount,
                 Measure = measure,
                 DateModified = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()),
+                Done = false,
             };
         }
 
@@ -85,6 +86,7 @@ namespace ShechterShoppingList.Models
                 doc.Measure = newData.Measure;
                 doc.Ammount = newData.Ammount;
                 doc.DateModified = newData.DateModified; //DateTime.Parse(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                doc.Done = newData.Done;
 
                 await DBContext.SaveAsync<Grocery>(doc);
             }

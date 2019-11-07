@@ -9,6 +9,6 @@ namespace ShechterShoppingList.ViewModels
     public class GroceryViewModel
     {
         public List<Grocery> Groceries { get; set; }
-        public Grocery _Grocery { get; set; }
+        public Grocery NewGrocery { get; set; }
     }
 }

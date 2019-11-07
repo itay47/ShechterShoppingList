@@ -43,9 +43,9 @@ namespace ShechterShoppingList.Controllers
             return View(grocery);
         }
 
-        public async Task<IActionResult> UpdateDataAsync(string gId, string gName, int gAmmount, Grocery gMeasure)
+        public async Task<IActionResult> UpdateDataAsync(string gId, string gName, int gAmmount, Grocery gModel)
         {
-            if (string.IsNullOrEmpty(gId) || string.IsNullOrEmpty(gName) || string.IsNullOrEmpty(gMeasure.Measure))
+            if (string.IsNullOrEmpty(gId) || string.IsNullOrEmpty(gName) || string.IsNullOrEmpty(gModel.Measure))
             {
                 return BadRequest();
             }
@@ -63,11 +63,105 @@ namespace ShechterShoppingList.Controllers
                     DateModified = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()),
                     GroceyName = gName,
                     Id = guid,
-                    Measure = gMeasure.Measure
+                    Measure = gModel.Measure,
+                    Done = grocery.Done,
                 };
 
                 await DynamoDbCRUDOperations.UpdateItemAsync(lst, updatedData);
                 return RedirectToAction("Index","Home",null);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task<IActionResult> AddNewGroceryAsync(string gName, int gAmmount, GroceryViewModel gModel)
+        {
+            if ( string.IsNullOrEmpty(gName) || string.IsNullOrEmpty(gModel.NewGrocery.Measure))
+            {
+                return BadRequest();
+            }
+
+            var guid = Guid.NewGuid();
+            try
+            {
+                Grocery newGrocery = new Grocery
+                {
+                    Ammount = gAmmount,
+                    DateModified = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()),
+                    GroceyName = gName,
+                    Id = guid,
+                    Measure = gModel.NewGrocery.Measure,
+                    Done = false
+                };
+
+                await DynamoDbCRUDOperations.AddItemAsync(newGrocery);
+                return RedirectToAction("Index", "Home", null);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task<IActionResult> DeleteItemAsync(Grocery gId)
+        {
+            if (gId.Id == null)
+            {
+                return BadRequest();
+            }
+
+            var guid = gId.Id;
+            
+            try
+            {
+                Grocery grocery = DynamoDbCRUDOperations.GetItemsById(guid).Result;
+                if (grocery != null)
+                {
+                    await DynamoDbCRUDOperations.DeleteItemAsync(guid);
+
+                    return RedirectToAction("Index", "Home", null);
+                }
+                else
+                    return BadRequest();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public async Task<IActionResult> ToggleDoneAsync(Grocery gId)
+        {
+            if (gId.Id == null)
+            {
+                return BadRequest();
+            }
+
+            var guid = gId.Id;
+            var lst = new List<Grocery>();
+            try
+            {
+                Grocery grocery = DynamoDbCRUDOperations.GetItemsById(guid).Result;
+                lst.Add(grocery);
+
+                Grocery updatedData = new Grocery
+                {
+                    Ammount = grocery.Ammount,
+                    DateModified = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()),
+                    GroceyName = grocery.GroceyName,
+                    Id = guid,
+                    Measure = grocery.Measure,
+                    Done = !grocery.Done,
+                };
+
+                await DynamoDbCRUDOperations.UpdateItemAsync(lst, updatedData);
+                return RedirectToAction("Index", "Home", null);
             }
             catch (Exception ex)
             {
