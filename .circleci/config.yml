@@ -12,8 +12,8 @@ jobs:
       - run:
           name: Build
           command: |
-          mkdir /tmp/artifacts;
-          dotnet build -c Release --runtime linux-x64 -o /tmp/artifacts
+              mkdir /tmp/artifacts;
+              dotnet build -c Release --runtime linux-x64 -o /tmp/artifacts
           working_directory: ShechterShoppingList
           
       - store_artifacts:
