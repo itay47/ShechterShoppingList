@@ -1,0 +1,24 @@
+ersion: 2
+jobs:
+  build:
+    docker:
+      - image: jetcipher/circleci-dotnet-core:2.2
+    steps:
+      - checkout
+      - run:
+          name: Restore
+          command: dotnet restore
+          working_directory: ShechterShoppingList
+      - run:
+          name: Build
+          command: dotnet build -c Release
+          working_directory: ShechterShoppingList
+#      - setup_remote_docker:
+#          docker_layer_caching: false
+#      - run:
+#          name: Build and push Docker image
+#          command: |
+#            docker build -t shechtershoppinglist .
+#            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+#            docker tag circleci itay47/shechtershoppinglist
+#            docker push itay47/shechtershoppinglist
