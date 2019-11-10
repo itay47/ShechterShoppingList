@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-            docker build -t ShechterShoppingList .
+            docker build -t itay47/ShechterShoppingList:latest .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker tag circleci itay47/ShechterShoppingList
             docker push itay47/ShechterShoppingList
