@@ -12,31 +12,46 @@
 
 <br />
 
-<div class="container-fluid">
+<div>
     <form asp-action="AddNewGroceryAsync" asp-controller="Home" method="post">
         <div class="form-group">
-            <div class="d-inline-flex">
-                <div style="margin-left:4px">@Html.DisplayNameFor(m => m.NewGrocery.GroceyName)</div>
-                <input asp-for="NewGrocery.GroceyName" id="gName" name="gName" class="form-control" style="text-align:center;margin-left:12px" />
-                <span asp-validation-for="NewGrocery.GroceyName" class="text-danger"></span>
-
-                <div style="margin-left:12px">@Html.DisplayNameFor(m => m.NewGrocery.Ammount)</div>
-                <input asp-for="NewGrocery.Ammount" id="gAmmount" name="gAmmount" class="form-control" style="text-align:center; margin-left:12px" />
-                <span asp-validation-for="NewGrocery.Ammount" class="text-danger"></span>
-
-                <div style="margin-left:12px">@Html.DisplayNameFor(m => m.NewGrocery.Measure)</div>
-                @Html.DropDownListFor(
-                    m => m.NewGrocery.Measure, // <-- the var for containing the selected item
-                    new SelectList(Enum.GetValues(typeof(Grocery.UnitOfMeasure))), // <-- the enum list
-                    null, // <-- default text
-                    new { @id = "gMeasure", @name = "gMeasure", @class = "form-control", @style = "margin-left:4px" }
-                  )
-                <span asp-validation-for="NewGrocery.Measure" class="text-danger"></span>
-
-                <button class="btn btn-success" formmethod="post" style="margin-left:10px">
-                    <i class="fas fa-plus"></i>
-                    Add
-                </button>
+            <div>
+                <table>
+                    <thead>
+                        <tr style="text-align:center">
+                            <td width="70%"><div>@Html.DisplayNameFor(m => m.NewGrocery.GroceyName)</div></td>
+                            <td width="10%"><div>@Html.DisplayNameFor(m => m.NewGrocery.Ammount)</div></td>
+                            <td width="20%"><div>@Html.DisplayNameFor(m => m.NewGrocery.Measure)</div></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="70%">
+                                <input asp-for="NewGrocery.GroceyName" id="gName" name="gName" class="form-control" style="text-align:center;margin-left:12px" />
+                                <span asp-validation-for="NewGrocery.GroceyName" class="text-danger"></span>
+                            </td>
+                            <td width="5%">
+                                <input asp-for="NewGrocery.Ammount" id="gAmmount" name="gAmmount" class="form-control" style="text-align:center; margin-left:12px" />
+                                <span asp-validation-for="NewGrocery.Ammount" class="text-danger"></span>
+                            </td>
+                            <td width="20%">
+                                @Html.DropDownListFor(
+                                m => m.NewGrocery.Measure, // <-- the var for containing the selected item
+                                new SelectList(Enum.GetValues(typeof(Grocery.UnitOfMeasure))), // <-- the enum list
+                                null, // <-- default text
+                                new { @id = "gMeasure", @name = "gMeasure", @class = "form-control", @style = "margin-left:4px" }
+                                )
+                                <span asp-validation-for="NewGrocery.Measure" class="text-danger"></span>
+                            </td>
+                            <td>
+                                <button class="btn btn-success" formmethod="post" style="margin-left:10px">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </form>
