@@ -1,14 +1,15 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:2.2-alpine3.10 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["ShechterShoppingList/ShechterShoppingList.csproj", "ShechterShoppingList/"]
+COPY ["ShechterShoppingList.csproj", "ShechterShoppingList/"]
 RUN dotnet restore "ShechterShoppingList/ShechterShoppingList.csproj"
+WORKDIR "/src/ShechterShoppingList/"
 COPY . .
-WORKDIR "/src/ShechterShoppingList"
+#WORKDIR "/src/ShechterShoppingList/"
 RUN dotnet build "ShechterShoppingList.csproj" -c Release -o /app/build
 
 FROM build AS publish
