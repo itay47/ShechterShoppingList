@@ -5,7 +5,16 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>7a1bba50-63f9-491c-b03b-c60f3e776a24</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+    <Win32Resource />
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="awscredentials.txt" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -21,6 +30,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\pic\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="..\.dockerignore">
+      <DependentUpon>dockerfile</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

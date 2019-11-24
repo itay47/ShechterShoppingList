@@ -35,6 +35,10 @@ namespace ShechterShoppingList
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", Configuration["AWS:AccessKey"]);
+            Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", Configuration["AWS:SecretKey"]);
+            Environment.SetEnvironmentVariable("AWS_REGION", Configuration["AWS:Region"]);
+
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddAWSService<IAmazonDynamoDB>();
             //services.AddDbContext<>
