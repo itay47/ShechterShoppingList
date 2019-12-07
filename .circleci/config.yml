@@ -2,7 +2,7 @@ ersion: 2
 jobs:
   build:
     docker:
-      - image: jetcipher/circleci-dotnet-core:2.2
+      - image: itay47/circleci-dotnet-core:3.1
     steps:
       - checkout
       - run:

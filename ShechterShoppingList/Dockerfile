@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/core/runtime-deps:2.2-alpine3.10 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["ShechterShoppingList.csproj", "ShechterShoppingList/"]
 RUN dotnet restore "ShechterShoppingList/ShechterShoppingList.csproj"
