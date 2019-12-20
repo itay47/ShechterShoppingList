@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
@@ -37,18 +38,25 @@ namespace ShechterShoppingList.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Error","Home",new {message = e.Message});
+                return RedirectToAction ("Error", "Home", new { message = e.Message });
             }
         }
 
-        [Route ("/Home/Error",Name = "Error")]
-        public async Task<IActionResult> ErrorPage(string message)
+        [Route ("/Home/Error", Name = "Error")]
+        public async Task<IActionResult> ErrorPage (string message)
         {
-                ErrorViewModel evm = new ErrorViewModel();
-                await Task.Delay(100);
-                evm.ErrorMessage = message;
-                
-                return View("ErrorPage",evm);        
+            var awsregion = string.IsNullOrEmpty(EnvironmentVariableAWSRegion.ENVIRONMENT_VARIABLE_REGION.SingleOrDefault ().ToString ())? "null": EnvironmentVariableAWSRegion.ENVIRONMENT_VARIABLE_REGION.SingleOrDefault ().ToString ();
+            var awsid = string.IsNullOrEmpty(EnvironmentVariablesAWSCredentials.ENVIRONMENT_VARIABLE_ACCESSKEY.SingleOrDefault().ToString())? "null" : EnvironmentVariablesAWSCredentials.ENVIRONMENT_VARIABLE_ACCESSKEY.SingleOrDefault().ToString();
+            var awskey = string.IsNullOrEmpty(EnvironmentVariablesAWSCredentials.ENVIRONMENT_VARIABLE_SECRETKEY.SingleOrDefault().ToString())? "null" : EnvironmentVariablesAWSCredentials.ENVIRONMENT_VARIABLE_SECRETKEY.SingleOrDefault().ToString();;
+
+            ErrorViewModel evm = new ErrorViewModel ();
+            await Task.Delay (100);
+            evm.ErrorMessage = message;
+            evm.AWS_ACCESS_KEY_ID = awsid;
+            evm.AWS_SECRET_ACCESS_KEY = awskey;
+            evm.AWS_REGION = awsregion;
+
+            return View ("ErrorPage", evm);
         }
 
         [Route ("/Home/Edit", Name = "Edit")]
