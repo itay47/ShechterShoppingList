@@ -131,8 +131,6 @@ namespace ShechterShoppingList.Models
             }
         }
 
-
-
         private async static Task CreateTableAsync()
         {
             //Table not found, creating table
