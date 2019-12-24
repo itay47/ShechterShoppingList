@@ -42,7 +42,7 @@ namespace ShechterShoppingList.Controllers
             }
         }
 
-        [Route ("/Home/Error", Name = "Error")]
+        [Route ("/Error", Name = "Error")]
         public async Task<IActionResult> ErrorPage (string message)
         {
             var awsregion = string.IsNullOrEmpty(EnvironmentVariableAWSRegion.ENVIRONMENT_VARIABLE_REGION.SingleOrDefault ().ToString ())? "null": EnvironmentVariableAWSRegion.ENVIRONMENT_VARIABLE_REGION.SingleOrDefault ().ToString ();
@@ -59,7 +59,7 @@ namespace ShechterShoppingList.Controllers
             return View ("ErrorPage", evm);
         }
 
-        [Route ("/Home/Edit", Name = "Edit")]
+        [Route ("/Edit", Name = "Edit")]
         public async Task<IActionResult> Edit (string Id)
         {
             var guid = Guid.Parse (Id);
@@ -68,7 +68,8 @@ namespace ShechterShoppingList.Controllers
             return View (grocery);
         }
 
-        public async Task<IActionResult> UpdateDataAsync (string gId, string gName, int gAmmount, Grocery gModel)
+        //public async Task<IActionResult> UpdateDataAsync (string gId, string gName, int gAmmount, Grocery gModel)
+        public async Task<IActionResult> UpdateData(string gId, string gName, int gAmmount, Grocery gModel)
         {
             if (string.IsNullOrEmpty (gId) || string.IsNullOrEmpty (gName) || string.IsNullOrEmpty (gModel.Measure))
             {
@@ -102,7 +103,10 @@ namespace ShechterShoppingList.Controllers
             }
         }
 
-        public async Task<IActionResult> AddNewGroceryAsync (string gName, int gAmmount, GroceryViewModel gModel)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddNewGroceryAsync (string gName, int gAmmount, GroceryViewModel gModel)
+        public async Task<IActionResult> AddNewGrocery(string gName, int gAmmount, GroceryViewModel gModel)
         {
             if (string.IsNullOrEmpty (gName) || string.IsNullOrEmpty (gModel.NewGrocery.Measure))
             {
@@ -132,7 +136,10 @@ namespace ShechterShoppingList.Controllers
             }
         }
 
-        public async Task<IActionResult> DeleteItemAsync (Grocery gId)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteItemAsync (Grocery gId)
+        public async Task<IActionResult> DeleteItem(Grocery gId)
         {
             if (gId.Id == null)
             {
@@ -160,8 +167,13 @@ namespace ShechterShoppingList.Controllers
             }
         }
 
-        public async Task<IActionResult> ToggleDoneAsync (Grocery gId)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Route("/",Name = "ToggleDone")]
+        //public async Task<IActionResult> ToggleDoneAsync (Grocery gId)
+        public async Task<IActionResult> ToggleDone(Grocery gId)
         {
+            
             if (gId.Id == null)
             {
                 return BadRequest ();

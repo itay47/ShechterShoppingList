@@ -62,13 +62,17 @@ namespace ShechterShoppingList
 
             app.UseHttpsRedirection ();
             app.UseStaticFiles ();
-            app.UseCookiePolicy ();
+            //app.UseCookiePolicy ();
 
             app.UseEndpoints (endpoints =>
             {
                 //endpoints.MapControllers();
-                endpoints.MapControllerRoute ("default", "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages ();
+                endpoints.MapControllerRoute (
+                    name:"default",
+                    pattern:"{controller=Home}/{action=Index}/{id?}");
+                
+                endpoints.MapRazorPages();
+                //endpoints.MapDefaultControllerRoute();
             });
 
             /* app.UseMvc (routes =>

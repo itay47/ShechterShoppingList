@@ -26,7 +26,7 @@ namespace ShechterShoppingList.Models
         [DynamoDBProperty]
         public string Measure { get; set; }
 
-        [Display(Name = "Date Modified")]
+        [Display(Name = "Modified")]
         [DynamoDBProperty]
         public DateTime DateModified { get; set; }
 
