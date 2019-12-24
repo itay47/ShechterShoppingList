@@ -13,7 +13,7 @@
 <br />
 
 <div>
-    <form asp-action="AddNewGroceryAsync" asp-controller="Home" method="post">
+    <form asp-action="AddNewGrocery" method="post">
         <div class="form-group">
             <div>
                 <table>
@@ -93,7 +93,7 @@
                             @*@Html.DisplayFor(m => item.Id)*@
                             <div style="text-align:center">
                                 <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
-                                    <button class="btn btn-primary" id="Edit @item.Id" disabled><i class="far fa-edit"></i> Edit</button>
+                                    <button class="btn btn-primary" id="Edit @item.Id" disabled><i class="far fa-edit"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
@@ -120,16 +120,16 @@
                         </td>
                         <td>
                             <div style="text-align:center">
-                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDoneAsync">
-                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i> Done</button>
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDone">
+                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
                         </td>
                         <td>
                             <div style="text-align:center">
-                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItemAsync">
-                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i> Delete</button>
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItem">
+                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
@@ -144,7 +144,7 @@
                             @*@Html.DisplayFor(m => item.Id)*@
                             <div style="text-align:center">
                                 <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="Edit">
-                                    <button class="btn btn-primary" id="Edit @item.Id"><i class="far fa-edit"></i> Edit</button>
+                                    <button class="btn btn-primary" id="Edit @item.Id"><i class="far fa-edit"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
@@ -171,16 +171,16 @@
                         </td>
                         <td>
                             <div style="text-align:center">
-                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDoneAsync">
-                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i> Done</button>
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="ToggleDone">
+                                    <button class="btn btn-warning" id="Done @item.Id"><i class="far fa-check-square"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
                         </td>
                         <td>
                             <div style="text-align:center">
-                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItemAsync">
-                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i> Delete</button>
+                                <form method="post" asp-route-id="@item.Id" asp-controller="Home" asp-action="DeleteItem">
+                                    <button class="btn btn-danger" id="Delete @item.Id"><i class="far fa-trash-alt"></i></button>
                                     @Html.HiddenFor(h => item.Id)
                                 </form>
                             </div>
