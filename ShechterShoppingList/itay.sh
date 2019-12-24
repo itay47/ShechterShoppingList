@@ -11,4 +11,4 @@ echo "creating aws profile file"
 #call dotnet mydll.dll to run the application
 echo "calling dotnet application"
 cd /app/
-ASPNETCORE_URLS="http://*:$PORT,https://*:$PORT" dotnet ShechterShoppingList.dll
+ASPNETCORE_URLS=http://*:$PORT dotnet ShechterShoppingList.dll
