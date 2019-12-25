@@ -18,15 +18,18 @@ jobs:
           
       - store_artifacts:
           path: /tmp/artifacts
-                    
+
       # build image
       - run:
-          name: Build_Image  
+          name: Build_Image
           command: |
               docker info
               docker build -t shechtershoppinglist:heroku -f Dockerfile .
+          working_directory: ShechterShoppingList
 
   manual_release_to_heroku:
+    docker:
+      - image: itay47/circleci-dotnet-core:3.1
     steps:
       # deploy the image
       - run: 
