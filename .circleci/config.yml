@@ -18,6 +18,37 @@ jobs:
           
       - store_artifacts:
           path: /tmp/artifacts
+                    
+      # build image
+      - run:
+          name: Build_Image  
+          command: |
+              docker info
+              docker build -t shechtershoppinglist:heroku -f Dockerfile .
+              
+  manual_release_to_heroku:
+    steps:
+      # deploy the image
+      - run: 
+          name: Deploy_to_Heroku
+          command: |
+              docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+              docker tag shechtershoppinglist:heroku registry.heroku.com/shechtershoppinglist/web
+#              docker push registry.heroku.com/shechtershoppinglist/web                
+              curl https://cli-assets.heroku.com/install.sh | sh
+              heroku container:push web -a shechtershoppinglist
+              heroku container:release web -a shechtershoppinglist
+              
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - manual_release_to_heroku:
+          type: approval
+          requires:
+            - build
+         
 #      - setup_remote_docker:
 #          docker_layer_caching: false
 #      - run:
