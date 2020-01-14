@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -13,6 +15,8 @@ using Amazon.Runtime;
 using Microsoft.AspNetCore.Mvc;
 using ShechterShoppingList.Models;
 using ShechterShoppingList.ViewModels;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace ShechterShoppingList.Controllers
 {
@@ -203,6 +207,16 @@ namespace ShechterShoppingList.Controllers
             {
                 throw ex;
             }
+        }
+
+        [HttpGet]
+        [Route("/GetActiveItems",Name = "GetActiveItems")]
+        public async Task<IActionResult> GetActiveItems()
+        {
+            var items = await DynamoDbCRUDOperations.GetDataAsync();
+            var activeItems = items.Where(x => x.Done == false);
+
+            return Json(activeItems,new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), WriteIndented = true}) ;
         }
 
         public HomeController (IAmazonDynamoDB amazonDBService)

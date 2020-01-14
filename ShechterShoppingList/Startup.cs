@@ -34,7 +34,7 @@ namespace ShechterShoppingList
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddControllersWithViews ();
+            services.AddControllersWithViews ().AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
             services.AddRazorPages ();
 
             Environment.SetEnvironmentVariable ("AWS_ACCESS_KEY_ID", Configuration["AWS:AccessKey"]);
